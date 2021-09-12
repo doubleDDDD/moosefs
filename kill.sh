@@ -6,5 +6,6 @@ chunk1="172.20.0.4"
 chunk2="172.20.0.5"
 chunk3="172.20.0.6"
 
+# 懒得区分了，直接GG
 mfsmaster stop
 mfschunkserver stop

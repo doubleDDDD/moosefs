@@ -36,11 +36,11 @@ for ip in ${targetiplist[@]}; do
     fi
 done
 
-# # rsync -avH --delete /root/minio/ root@172.20.0.2/3/4/5:/root/double_D/minio
-# src=/root/minio/
-# dst=/root/double_D/minio
-# for ip in ${targetiplist[@]}; do
-#     rsync -avH --delete $src root@$ip:$dst
-# done
+# rsync -avH --delete /root/moosefs root@172.20.0.3/4/5/6:/root/double_D/moosefs/moosefs
+src=/root/moosefs
+dst=/root/double_D/moosefs/moosefs
+for ip in ${targetiplist[@]}; do
+    rsync -avH --delete $src root@$ip:$dst
+done
 
 exit 0
