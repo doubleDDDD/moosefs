@@ -14,18 +14,17 @@ ports=($port0 $port1 $port2 $port3)
 devnodeip1="172.17.0.2"
 devnodeip2="172.20.0.2"
 # wsl
-devnodeip3="172.20.193.156"
-devnodeip4="192.168.50.16"
+devnodeip3="192.168.50.16"
 
 targetiplist=($node0ip $node1ip $node2ip $node3ip)
-devips=($devnodeip1 $devnodeip2 $devnodeip3 $devnodeip4)
+devips=($devnodeip1 $devnodeip2 $devnodeip3)
 devipsmac=($devnodeip1 $devnodeip2)
 # 区分一下是自己的mac还是其他
 mac=true
 
 selfips=`ifconfig -a|grep inet|grep -v 127.0.0.1|grep -v inet6|awk '{print $2}'|tr -d "addr:"​`
 for selfip in $selfips; do
-    if [[ ! "${devips[@]}" =~ "$selfip" ]];then
+    if [[ "${targetiplist[@]}" =~ "$selfip" ]];then
         echo "$selfip has no need to run!"
         exit 1
     fi
