@@ -34,6 +34,7 @@ done
 
 if [ $master = true ];then
     mfsmaster start
+    mfscgiserv start
     echo "master start"
 fi
 
