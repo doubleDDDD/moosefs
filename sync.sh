@@ -6,12 +6,15 @@ node0ip="172.20.0.3"
 node1ip="172.20.0.4"
 node2ip="172.20.0.5"
 node3ip="172.20.0.6"
+# 暂时仅wsl下使用
+client="172.20.0.7"
 
 port0=22222
 port1=22223
 port2=22224
 port3=22225
-ports=($port0 $port1 $port2 $port3)
+port4=22226
+ports=($port0 $port1 $port2 $port3, $port4)
 
 # 跑这个脚本的应该只有一个node
 devnodeip1="172.17.0.2"
