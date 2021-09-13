@@ -7,13 +7,26 @@ node1ip="172.20.0.4"
 node2ip="172.20.0.5"
 node3ip="172.20.0.6"
 
+port0=22222
+port1=22223
+port2=22224
+port3=22225
+ports=($port0 $port1 $port2 $port3)
+
 # 跑这个脚本的应该只有一个node
 devnodeip1="172.17.0.2"
 devnodeip2="172.20.0.2"
+# wsl
+devnodeip3="172.20.193.156"
+devnodeip4="192.168.50.16"
 
 # minio应该在的ip
 targetiplist=($node0ip $node1ip $node2ip $node3ip)
-devips=($devnodeip1 $devnodeip2)
+devips=($devnodeip1 $devnodeip2 $devnodeip3 $devnodeip4)
+devipsmac=($devnodeip1 $devnodeip2)
+
+# 区分一下是自己的mac还是其他
+mac=true
 
 # 得到自己的ip
 # grep -v 选择不匹配的项
@@ -27,20 +40,36 @@ for selfip in $selfips; do
     fi
 done
 
-for ip in ${targetiplist[@]}; do
-    if ping -c 1 $ip > /dev/null; then
-        echo "$ip is ok"  # 双引号中变量是可以被解析的
+for _selfip in $selfips; do
+    if [[ "${devipsmac[@]}" =~ "$_selfip" ]];then
+        mac=true
     else
-        echo "$ip is GG, exit!"
-        exit 1
+        mac=false
     fi
 done
 
-# rsync -avH --delete /root/moosefs root@172.20.0.3/4/5/6:/root/double_D/moosefs/moosefs
-src=/root/moosefs
-dst=/root/double_D/moosefs/moosefs
-for ip in ${targetiplist[@]}; do
-    rsync -avH --delete $src root@$ip:$dst
-done
-
+if [ $mac = true ];then
+    # mac
+    for ip in ${targetiplist[@]}; do
+        if ping -c 1 $ip > /dev/null; then
+            echo "$ip is ok"  # 双引号中变量是可以被解析的
+        else
+            echo "$ip is GG, exit!"
+            exit 1
+        fi
+    done
+    # rsync -avH --delete /root/moosefs root@172.20.0.3/4/5/6:/root/double_D/moosefs/moosefs
+    src=/root/moosefs
+    dst=/root/double_D/moosefs/moosefs
+    for ip in ${targetiplist[@]}; do
+        rsync -avH --delete $src root@$ip:$dst
+    done
+else
+    # wsl
+    src=/home/doubled/double_D/moosefs/
+    dst=/root/double_D/moosefs/moosefs/
+    for port in ${ports[@]}; do
+        rsync -avH -e "ssh -p $port" --delete $src root@localhost:$dst
+    done
+fi
 exit 0

@@ -9,8 +9,8 @@ chunk3="172.20.0.6"
 masters=($master)
 chunks=($chunk1 $chunk2 $chunk3)
 
-# mfsmaster kill
-# mfschunkserver kill
+nohup mfsmaster kill > /dev/null 2>&1 &
+nohup mfschunkserver kill > /dev/null 2>&1 &
 
 master=false
 chunk=false

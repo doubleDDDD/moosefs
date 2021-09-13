@@ -7,5 +7,5 @@ chunk2="172.20.0.5"
 chunk3="172.20.0.6"
 
 # 懒得区分了，直接GG
-mfsmaster stop
-mfschunkserver stop
+nohup mfsmaster stop > /dev/null 2>&1 &
+nohup mfschunkserver stop > /dev/null 2>&1 &
