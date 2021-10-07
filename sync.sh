@@ -61,8 +61,8 @@ if [ $mac = true ];then
         fi
     done
     # rsync -avH --delete /root/moosefs root@172.20.0.3/4/5/6:/root/double_D/moosefs/moosefs
-    src=/root/moosefs
-    dst=/root/double_D/moosefs/moosefs
+    src=/root/moosefs/
+    dst=/root/double_D/moosefs/moosefs/
     for ip in ${targetiplist[@]}; do
         rsync -avH --delete $src root@$ip:$dst
     done
